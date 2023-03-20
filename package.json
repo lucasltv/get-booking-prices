@@ -35,7 +35,7 @@
     "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why",
-    "release": "release-it"
+    "release": "release-it && yarn publish"
   },
   "peerDependencies": {},
   "husky": {
@@ -79,7 +79,7 @@
       "tagName": "v${version}"
     },
     "npm": {
-      "publish": true
+      "publish": false
     },
     "github": {
       "release": true
