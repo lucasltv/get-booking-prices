@@ -1,0 +1,93 @@
+{
+  "name": "get-booking-prices",
+  "version": "1.2.8",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lucasltv/get-booking-prices.git"
+  },
+  "keywords": [
+    "Booking.com",
+    "Room price scraper"
+  ],
+  "author": {
+    "name": "Lucas Vieira",
+    "email": "lucasltv@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/lucasltv/get-booking-prices/issues"
+  },
+  "homepage": "https://github.com/lucasltv/get-booking-prices#readme",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
+    "release": "release-it"
+  },
+  "peerDependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "module": "dist/get-booking-prices.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/get-booking-prices.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/get-booking-prices.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@release-it/conventional-changelog": "^5.1.1",
+    "@size-limit/preset-small-lib": "^8.2.4",
+    "husky": "^8.0.3",
+    "release-it": "^15.9.0",
+    "size-limit": "^8.2.4",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.5.0",
+    "typescript": "^5.0.2"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "Release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  }
+}
