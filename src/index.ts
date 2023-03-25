@@ -9,6 +9,8 @@ export type HotelRoomAvailability = {
 
 export type GetRoomsOptions = {
   customHeaders?: Record<string, string>;
+  adults?: number; // default = 2
+  country?: string; // default = 'br'
 };
 
 // const saveSreenShot = (data: string) => {
@@ -26,11 +28,9 @@ export async function getRooms(
   hotelSlug: string,
   checkin: Date,
   checkout: Date,
-  adults: number,
-  country: string,
   options?: GetRoomsOptions
 ): Promise<HotelRoomAvailability[]> {
-  const { customHeaders = {} } = options || {};
+  const { customHeaders = {}, adults = 2, country = 'br' } = options || {};
   const _checkin = formatDate(checkin);
   const _checkout = formatDate(checkout);
 

@@ -35,7 +35,9 @@
     "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why",
-    "release": "release-it && yarn publish"
+    "release": "release-it && yarn publish",
+    "predev": "yarn build",
+    "dev": "node --watch --inspect-brk example"
   },
   "peerDependencies": {},
   "husky": {

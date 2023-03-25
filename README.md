@@ -29,8 +29,12 @@ export default function App() {
         const checkout = new Date();
         checkout.setDate(checkout.getDate() + 1);
         const adults = 2;
-        const country_slug = 'br'
-        const rooms = await getRooms(hotelSlug, checkin, checkout, adults, country_slug);
+        const country = 'br';
+        const options = { 
+          adults: 2, // Optional. Default: 2
+          country: 'br', // Optional. Default: br (hotel country)
+        };
+        const rooms = await getRooms(hotelSlug, checkin, checkout, options);
         setRooms(rooms);
         console.log(`Rooms:`, rooms);
       } catch (e) {
