@@ -28,8 +28,6 @@ export default function App() {
         const checkin = new Date();
         const checkout = new Date();
         checkout.setDate(checkout.getDate() + 1);
-        const adults = 2;
-        const country = 'br';
         const options = { 
           adults: 2, // Optional. Default: 2
           country: 'br', // Optional. Default: br (hotel country)
