@@ -1,10 +1,14 @@
 import * as cheerio from 'cheerio';
-import {fetchData, formatDate, removeLineBreakers} from './helpers';
+import { fetchData, formatDate, removeLineBreakers } from './helpers';
 
 export type HotelRoomAvailability = {
   name: string;
   price: number;
   occupancy: number;
+};
+
+export type GetRoomsOptions = {
+  customHeaders?: Record<string, string>;
 };
 
 // const saveSreenShot = (data: string) => {
@@ -19,18 +23,20 @@ export type HotelRoomAvailability = {
 // };
 
 export async function getRooms(
-  hotel_slug: string,
+  hotelSlug: string,
   checkin: Date,
   checkout: Date,
   adults: number,
-  country: string
+  country: string,
+  options?: GetRoomsOptions
 ): Promise<HotelRoomAvailability[]> {
+  const { customHeaders = {} } = options || {};
   const _checkin = formatDate(checkin);
   const _checkout = formatDate(checkout);
 
-  const url = `https://www.booking.com/hotel/${country}/${hotel_slug}.pt-br.html?checkin=${_checkin}&checkout=${_checkout}&group_adults=${adults}&do_availability_check=1`;
+  const url = `https://www.booking.com/hotel/${country}/${hotelSlug}.pt-br.html?checkin=${_checkin}&checkout=${_checkout}&group_adults=${adults}&do_availability_check=1`;
 
-  const data = await fetchData(url);
+  const data = await fetchData(url, customHeaders);
   const $ = cheerio.load(data);
 
   const trs = $('tr.js-rt-block-row').toArray();
@@ -43,14 +49,21 @@ export async function getRooms(
       price: 0,
       occupancy: 0,
     };
-    const tds = $(tr).find('td.hprt-table-cell').toArray();
+    const tds = $(tr)
+      .find('td.hprt-table-cell')
+      .toArray();
     let pushed = false;
     tds.forEach(td => {
       const _td = $(td);
       const className = _td.attr('class') || '';
 
       if (className.indexOf('first') > -1) {
-        roomName = removeLineBreakers(_td.find('span').first().text()); // New Room loop
+        roomName = removeLineBreakers(
+          _td
+            .find('span')
+            .first()
+            .text()
+        ); // New Room loop
         room.name = roomName;
       } else if (className.indexOf('occupancy') > -1) {
         room.occupancy = _td.find('i').length || 1;

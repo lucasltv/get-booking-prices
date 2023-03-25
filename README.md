@@ -24,13 +24,13 @@ export default function App() {
   React.useEffect(() => {
     const getData = async () => {
       try {
-        const hotel_slug = "zarzuela"; // Get the hotel slug from Booking.com url details page
+        const hotelSlug = "zarzuela"; // Get the hotel slug from Booking.com url details page
         const checkin = new Date();
         const checkout = new Date();
         checkout.setDate(checkout.getDate() + 1);
         const adults = 2;
         const country_slug = 'br'
-        const rooms = await getRooms(hotel_slug, checkin, checkout, adults, country_slug);
+        const rooms = await getRooms(hotelSlug, checkin, checkout, adults, country_slug);
         setRooms(rooms);
         console.log(`Rooms:`, rooms);
       } catch (e) {
