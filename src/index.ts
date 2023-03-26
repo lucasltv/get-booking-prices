@@ -11,18 +11,8 @@ export type GetRoomsOptions = {
   customHeaders?: Record<string, string>;
   adults?: number; // default = 2
   country?: string; // default = 'br'
+  currency?: string; // default = 'BRL'
 };
-
-// const saveSreenShot = (data: string) => {
-//   return new Promise((resolve, reject) => {
-//     writeFile("booking.html", data, (err) => {
-//       if (err) {
-//         reject(err);
-//       }
-//       resolve(null);
-//     });
-//   });
-// };
 
 export async function getRooms(
   hotelSlug: string,
@@ -30,11 +20,12 @@ export async function getRooms(
   checkout: Date,
   options?: GetRoomsOptions
 ): Promise<HotelRoomAvailability[]> {
-  const { customHeaders = {}, adults = 2, country = 'br' } = options || {};
+  const { customHeaders = {}, adults = 2, country = 'br', currency = 'BRL' } =
+    options || {};
   const _checkin = formatDate(checkin);
   const _checkout = formatDate(checkout);
 
-  const url = `https://www.booking.com/hotel/${country}/${hotelSlug}.pt-br.html?checkin=${_checkin}&checkout=${_checkout}&group_adults=${adults}&do_availability_check=1`;
+  const url = `https://www.booking.com/hotel/${country}/${hotelSlug}.pt-br.html?checkin=${_checkin}&checkout=${_checkout}&group_adults=${adults}&do_availability_check=1&selected_currency=${currency}`;
 
   const data = await fetchData(url, customHeaders);
   const $ = cheerio.load(data);
